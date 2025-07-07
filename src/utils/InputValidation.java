@@ -1,14 +1,13 @@
-package game;
+package utils;
 
 import java.util.Scanner;
 
-public class InputValidation {
-    private static Scanner scanner;
+public final class InputValidation {
 
-    public InputValidation(Scanner scanner) {
-        this.scanner = scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    }
+    private InputValidation() {}
+
     public static boolean askForReplay(boolean exitGame) {
         String str;
         while (true) {
