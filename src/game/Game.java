@@ -23,6 +23,7 @@ public class Game {
 
         for (int i = 1; i <= attemptsLimit; i++) {
 
+            provideHint(maxNumber, attemptsLimit, secretNumber, i);
             num = InputValidation.getValidNumber(maxNumber);
 
             attempts[i - 1] = num;
@@ -54,6 +55,16 @@ public class Game {
         System.out.println("Хочешь сыграть ещё? (да/нет)");
     }
 
+    public static void provideHint(int maxNumber, int attemptsLimit, int secretNumber, int i) {
+        if (i == attemptsLimit / 3) {
+            System.out.println("Подсказка: число " + (secretNumber % 2 == 0 ? "четное" : "нечетное"));
+        } else if (i == attemptsLimit * 2 / 3) {
+            int range = HINT_RANGE * maxNumber / 100;
+            int lowerBound = Math.max(1, secretNumber - range);
+            int upperBound = Math.min(maxNumber, secretNumber + range);
+            System.out.println("Подсказка: число между " + lowerBound + " и " + upperBound);
+        }
+    }
     public static int guessANumber(int maxNumber) {
         return (int) (Math.random() * maxNumber) + 1;
     }
