@@ -3,25 +3,29 @@ package game;
 import utils.InputValidation;
 
 public class Menu {
+    private int level;
     private int maxNumber;
     private int attemptsLimit;
 
     public void run() {
-        selectLevel();
-        Game game = new Game();
-        game.start(maxNumber, attemptsLimit);
+        boolean exitGame = false; //Выход из игры
+        while (!exitGame) { //пока не выход false = true
+            selectLevel();
+            Game game = new Game();
+            game.start(maxNumber, attemptsLimit);
+            exitGame = InputValidation.askForReplay(exitGame, game.bestResult);
+        }
     }
+
     public static void resultChoiceLevel(int level, int maxNumber, int attemptsLimit) {
         System.out.println("Выбран уровень: " +
                 (level == 1 ? "Лёгкий" : level == 2 ? "Средний" : level == 3 ? "Сложный" : "Эксперт") +
                 ". Угадай число от 1 до " + maxNumber + ". Попыток: " + attemptsLimit);
     }
-    public static void selectLevel() {
+
+    public void selectLevel() {
         suggestToTheUser();
         //переменные куда я буду считывать и сохранять значение
-        int level; //выбранный уровень
-        int maxNumber; // Верхняя граница числа (50, 100 или 200)
-        int attemptsLimit; // Лимит попыток (10, 7, 6 или 4 )
 
         level = InputValidation.validLevelSelection();
         // Настраиваем параметры игры на основе выбора

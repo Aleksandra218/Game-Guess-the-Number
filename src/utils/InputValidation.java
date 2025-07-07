@@ -8,7 +8,7 @@ public final class InputValidation {
 
     private InputValidation() {}
 
-    public static boolean askForReplay(boolean exitGame) {
+    public static boolean askForReplay(boolean exitGame, int bestResult) {
         String str;
         while (true) {
             if (!scanner.hasNextLine()) {
@@ -18,7 +18,7 @@ public final class InputValidation {
             if (str.isEmpty()) continue;
             if (str.equalsIgnoreCase("нет")) {
                 exitGame = true;
-                System.out.println("Спасибо за игру! Игра завершена. Ваш рекорд: ");
+                System.out.println("Спасибо за игру! Игра завершена. Ваш рекорд: " + bestResult);
                 break;
             } else if (str.equalsIgnoreCase("да")) {
                 break;
