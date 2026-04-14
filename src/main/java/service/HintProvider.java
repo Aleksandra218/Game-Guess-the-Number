@@ -1,7 +1,5 @@
 package service;
 
-import presentation.Menu;
-
 public class HintProvider {
     static final int HINT_RANGE = 10;// Диапазон подсказки
 

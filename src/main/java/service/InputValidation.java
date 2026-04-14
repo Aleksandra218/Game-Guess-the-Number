@@ -1,9 +1,17 @@
-package util;
+package service;
+
+import presentation.Message;
+import presentation.UserInterface;
 
 import java.util.Scanner;
 
 public class InputValidation {
-    private static final Scanner SCANNER = new Scanner(System.in);
+    private final Scanner SCANNER = new Scanner(System.in);
+    private final UserInterface ui;
+
+    public InputValidation(UserInterface ui) {
+        this.ui = ui;
+    }
 
     public boolean askForReplay(int bestResult) {
         boolean exitGame2 = false;
@@ -13,28 +21,28 @@ public class InputValidation {
             if (str.isEmpty()) continue;
             if (str.equalsIgnoreCase("нет")) {
                 exitGame2 = true;
-                System.out.println("Спасибо за игру! Игра завершена. Ваш рекорд: " + bestResult);
+                ui.showMessage(Message.LOSE_END_GAME_RECORD, bestResult);
                 break;
             } else if (str.equalsIgnoreCase("да")) {
                 break;
             } else {
-                System.out.println("Пожалуйста, введите 'да' или 'нет'.");
+                ui.showMessage(Message.ERROR_TEXT_REPLAY);
             }
         }
         return exitGame2;
     }
     public int getValidNumber(int maxNumber) {
-        System.out.println("Введите целое положительное число от 1 до " + maxNumber);
+        ui.showMessage(Message.INFO_NUMBER_MAX_NUMBER, maxNumber);
         while (true) {
             if (!SCANNER.hasNextInt()) {
-                System.out.println("Ошибка: вы ввели текст или дробное число. Пожалуйста, введите целое положительное число.");
+                ui.showMessage(Message.ERROR_NOT_NUMBER);
                 SCANNER.next();
                 continue;
             }
             int num = SCANNER.nextInt();
             SCANNER.nextLine();
-            if (num < 0 || num > maxNumber) {
-                System.out.println("Ошибка: введите число от 1 до " + maxNumber);
+            if (num < 0 || num > maxNumber) { //за пределами
+                ui.showMessage(Message.ERROR_NUMBER_OUT_OF_BOUNDS, maxNumber);
                 continue;
             }
             return num;
@@ -42,18 +50,17 @@ public class InputValidation {
     }
 
     public int validLevelSelection() {
-        // Считываем выбор уровня
         while (true) {
             if (!SCANNER.hasNextInt()) {
-                System.out.println("Ошибка: введите число от 1 до 4.");
+                ui.showMessage(Message.ERROR_NOT_NUMBER);
                 SCANNER.next();
                 continue;
             }
             int level = SCANNER.nextInt();
             SCANNER.nextLine();
 
-            if (level < 1 || level > 4) {
-                System.out.println("Ошибка: введите число от 1 до 4.");
+            if (level < 1 || level > 4) { //за пределами
+                ui.showMessage(Message.ERROR_OUT_OF_BOUNDS_LEVEL);
                 continue;
             }
             return level;

@@ -3,19 +3,20 @@
 
 import factory.LevelSelector;
 import presentation.Menu;
+import presentation.UserInterface;
 import service.Game;
 import service.ScoreCalculator;
-import util.InputValidation;
+import service.InputValidation;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        Menu menu = new Menu();
-        InputValidation inputValidation = new InputValidation();
+        UserInterface ui = new Menu();
+        InputValidation inputValidation = new InputValidation(ui);
         LevelSelector levelSelector = new LevelSelector(inputValidation);
         ScoreCalculator scoreCalculator = new ScoreCalculator();
-        Game game = new Game(menu, levelSelector, inputValidation, scoreCalculator);
+        Game game = new Game(ui, levelSelector, inputValidation, scoreCalculator);
         game.start();
     }
 }
